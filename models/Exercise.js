@@ -19,7 +19,7 @@ const exerciseSchema = new mongoose.Schema(
             enum: liftTypes
 
         },
-        equimentType: {
+        equipmentType: {
             type: String,
             required: true,
             enum: equipmentTypes
