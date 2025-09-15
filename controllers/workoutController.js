@@ -48,7 +48,7 @@ async function deleteWorkout(req, res) {
     try {
         const workout = await Workout.findByIdAndDelete(req.params.id)
         if (!workout) return res.status(404).json({ message: "Workout not found" })
-        return res.json({ message: `${req.params.title} successfully deleted` })
+        return res.json({ message: `${workout.name} successfully deleted` })
     } catch (error) {
         console.error(`Error deleting workout with ID: ${req.params.id} => ${error}`)
         return res.status(500).json({ error: "Error deleting workout" })

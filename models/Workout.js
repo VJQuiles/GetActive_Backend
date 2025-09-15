@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const workoutTypes = require('../utils/types')
+const { workoutTypes } = require('../utils/types')
 
 const workoutSchema = new mongoose.Schema(
     {
