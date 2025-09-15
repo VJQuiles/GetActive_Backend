@@ -38,6 +38,22 @@ async function getExercises(req, res) {
     }
 }
 
+async function getOneExercise(req, res) {
+    try {
+        const workout = await Workout.findById(req.params.workoutId)
+
+        if (workout === null) return res.status(404).json({ error: "Workout does not exist" })
+
+        if (!workout.user.equals(req.user._id)) return res.status(403).json({ message: "This is not your workout" })
+
+        const exercise = await Exercise.findOne({ _id: req.params.exerciseId, workout: req.params.workoutId })
+        return res.json(exercise)
+    } catch (error) {
+        console.error(`Error getting exercise with ID: ${req.params.exerciseId} => ${error}`)
+        return res.status(500).json({ error: "Error retrieving workout" })
+    }
+}
+
 async function updateExercise(req, res) {
     try {
         const workout = await Workout.findById(req.params.workoutId)
@@ -74,5 +90,6 @@ module.exports = {
     createExercise,
     getExercises,
     updateExercise,
-    deleteExercise
+    deleteExercise,
+    getOneExercise
 }
