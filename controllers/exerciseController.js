@@ -34,7 +34,7 @@ async function getExercises(req, res) {
         return res.json(exercises)
     } catch (error) {
         console.error(`Error getting exercises: ${error}`)
-        return res.status(500).json({ error: "Error getting exercises" })
+        return res.status(400).json({ error: "Error getting exercises" })
     }
 }
 
@@ -50,7 +50,7 @@ async function getOneExercise(req, res) {
         return res.json(exercise)
     } catch (error) {
         console.error(`Error getting exercise with ID: ${req.params.exerciseId} => ${error}`)
-        return res.status(500).json({ error: "Error retrieving workout" })
+        return res.status(400).json({ error: "Error retrieving workout" })
     }
 }
 
@@ -62,7 +62,7 @@ async function updateExercise(req, res) {
 
         if (!workout.user.equals(req.user._id)) return res.status(403).json({ message: "This is not your workout" })
 
-        const exercise = await Exercise.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        const exercise = await Exercise.findByIdAndUpdate(req.params.exerciseId, req.body, { new: true })
         if (!exercise) return res.status(404).json({ message: `No exercise with ID: ${req.params.id}` })
         return res.json(exercise)
     } catch (error) {
@@ -78,9 +78,9 @@ async function deleteExercise(req, res) {
 
         if (!workout.user.equals(req.user._id)) return res.status(403).json({ message: "This is not your workout" })
 
-        const exercise = await Exercise.findByIdAndDelete(req.params.id)
+        const exercise = await Exercise.findByIdAndDelete(req.params.exerciseId)
         if (!exercise) return res.status(404).json({ message: `No Exercise with ID: ${req.params.id}` })
-        return res.json({ message: `${exercise.title} successfully deleted` })
+        return res.json({ message: `${exercise.name} successfully deleted` })
     } catch (error) {
         return res.status(500).json({ error: `Error deleting Exercise: ${error.message}` })
     }
