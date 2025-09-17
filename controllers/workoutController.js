@@ -36,7 +36,7 @@ async function getOneWorkout(req, res) {
 async function updateWorkout(req, res) {
     try {
         const workout = await Workout.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        if (!workout) return res.status(404).json({ message: `Workout with id ${req.params.id} does not exist.` })
+        if (!workout) return res.status(404).json({ error: `Workout with id ${req.params.id} does not exist.` })
         return res.json(workout)
     } catch (error) {
         console.error(`Error updating workout with ID: ${req.params.id} => ${error}`)
@@ -47,7 +47,7 @@ async function updateWorkout(req, res) {
 async function deleteWorkout(req, res) {
     try {
         const workout = await Workout.findByIdAndDelete(req.params.id)
-        if (!workout) return res.status(404).json({ message: "Workout not found" })
+        if (!workout) return res.status(404).json({ error: "Workout not found" })
         return res.json({ message: `${workout.name} successfully deleted` })
     } catch (error) {
         console.error(`Error deleting workout with ID: ${req.params.id} => ${error}`)

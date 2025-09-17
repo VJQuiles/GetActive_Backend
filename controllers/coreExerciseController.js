@@ -69,7 +69,7 @@ async function seedDB(req, res) {
 async function getAll(req, res) {
     try {
         const coreExercises = await CoreExercise.find({})
-        if (!coreExercises) return res.status(404).json({ message: `Did you seed the db right?` })
+        if (!coreExercises) return res.status(404).json({ error: `Did you seed the db right?` })
         return res.json(coreExercises)
     } catch (error) {
         console.error(`Error getting exercises: ${error}`)
@@ -80,7 +80,7 @@ async function getAll(req, res) {
 async function getOne(req, res) {
     try {
         const coreExercise = await CoreExercise.findOne({ _id: req.params.ceId })
-        if (!coreExercise) return res.status(404).json({ message: `No exercise with ID: ${req.params.ceId}` })
+        if (!coreExercise) return res.status(404).json({ error: `No exercise with ID: ${req.params.ceId}` })
         return res.json(coreExercise)
     } catch (error) {
         console.error(`Error getting core exercise with ID: ${req.params.exerciseId} => ${error}`)

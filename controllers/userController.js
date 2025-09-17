@@ -23,7 +23,7 @@ async function registerUser(req, res) {
             { expiresIn: expiration },
             (error, token) => {
                 if (error) throw error
-                return res.status(200).json({ success: `${req.body.username} created successfully! Token: ${token}` })
+                return res.status(200).json({ token, user: payload })
             }
         )
     } catch (error) {
@@ -39,7 +39,7 @@ async function loginUser(req, res) {
         if (!user) return res.status(400).json({ message: "*Looks at id*, *looks at you* Nah, get outta here" })
 
         const correctPassword = await user.isCorrectPassword(req.body.password)
-        if (!correctPassword) return res.status(400).json({ message: "Hmm that's not quite right" })
+        if (!correctPassword) return res.status(400).json({ error: "Hmm that's not quite right" })
 
         const payload = {
             _id: user.id,
@@ -53,7 +53,7 @@ async function loginUser(req, res) {
             { expiresIn: expiration },
             (error, token) => {
                 if (error) throw error
-                return res.status(200).json({ success: `Login Successful! User ID: ${user.id} Token: ${token}` })
+                return res.status(200).json({ token, user: payload })
             }
         )
 
