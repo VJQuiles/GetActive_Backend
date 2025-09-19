@@ -14,5 +14,6 @@ router.delete('/delete-workout/:id', workoutController.deleteWorkout)
 router.post('/:workoutId/exercises', exerciseController.createExercise)
 router.get('/:workoutId/exercises', exerciseController.getExercises)
 router.get('/:workoutId/exercises/:exerciseId', exerciseController.getOneExercise)
+router.delete('/:workoutId/exercises/:exerciseId', exerciseController.deleteExercise)
 
 module.exports = router
