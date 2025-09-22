@@ -1,6 +1,9 @@
+// Controller to handle exercise routes. It's important to note, two of the routes are in the workout routes. User must be authenticated to access theser routes. 
+
 const Exercise = require('../models/Exercise')
 const Workout = require('../models/Workout')
 
+// Function to create an exercise. Takes a request, from a form in the front end, and responds with the created exercise. This has a check to make sure the user is the owner of the workout this is being added to. This is aplied throughout all routes
 async function createExercise(req, res) {
     try {
         const workout = await Workout.findById(req.params.workoutId)
@@ -21,6 +24,7 @@ async function createExercise(req, res) {
     }
 }
 
+// Function that gets all exercises associated with a workout. Takes a request, checks the user is the owner of the workout, and sends back the response of the requested exercises. 
 async function getExercises(req, res) {
     try {
         const workout = await Workout.findById(req.params.workoutId)
@@ -38,6 +42,7 @@ async function getExercises(req, res) {
     }
 }
 
+// Function that gets a particular exercise sent in the request after the ownership check. Responds with the requested exercise.
 async function getOneExercise(req, res) {
     try {
         const workout = await Workout.findById(req.params.workoutId)
@@ -55,6 +60,7 @@ async function getOneExercise(req, res) {
     }
 }
 
+// Function to update exercises. Takes a request, which includes the edit, and sends back a response with the update. Uses query params from the url to specify the exercise.
 async function updateExercise(req, res) {
     try {
         const workout = await Workout.findById(req.params.workoutId)
@@ -71,6 +77,7 @@ async function updateExercise(req, res) {
     }
 }
 
+// Function to delete a specific user created excercise. Takes the requested id from the params to choose which one to delete. 
 async function deleteExercise(req, res) {
     try {
         const workout = await Workout.findById(req.params.workoutId)

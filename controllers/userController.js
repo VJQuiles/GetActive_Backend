@@ -1,9 +1,12 @@
+//Controller to handle User routes. 
+
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 
 const secret = process.env.JWT_SECRET
 const expiration = '1h'
 
+// Function to register a user. Uses the email to check if they already exist, if so, an error is returned. If not, a new user is created, and a jwt is created to allow a access to the user dashboard. Sends the user information as the payload.
 async function registerUser(req, res) {
     try {
         const existingUser = await User.findOne({ email: req.body.email })
@@ -32,7 +35,7 @@ async function registerUser(req, res) {
     }
 }
 
-
+// Function to log in user. Checks the password given to authenticate the user and issue a token for access to user workouts and exercises. Uses the email entered from the request body to locate the user. 
 async function loginUser(req, res) {
     try {
         const user = await User.findOne({ email: req.body.email })

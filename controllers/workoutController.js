@@ -1,5 +1,9 @@
+// Controller to handle workout routes. Usewr must be authenticated to access. 
+
 const Workout = require('../models/Workout')
 
+
+// Function to create a workout for a user. Takes the user's id to link to it to the workout and establish ownership.
 async function createWorkout(req, res) {
     try {
         const workout = await Workout.create({
@@ -13,6 +17,7 @@ async function createWorkout(req, res) {
     }
 }
 
+// Function to get all workouts. Takes a request in the form of the user id and returns all related workouts.
 async function getAllWorkouts(req, res) {
     try {
         const workouts = await Workout.find({ user: req.user._id })
@@ -23,6 +28,7 @@ async function getAllWorkouts(req, res) {
     }
 }
 
+// Function to get singular workout via query params. The id is pulled from the request body, and the corresponding workout is sent back. 
 async function getOneWorkout(req, res) {
     try {
         const workout = await Workout.findById(req.params.id)
@@ -33,6 +39,7 @@ async function getOneWorkout(req, res) {
     }
 }
 
+// Function to up date a workout. Takes the id from the query in the url to identify the workout, and return it to the user. 
 async function updateWorkout(req, res) {
     try {
         const workout = await Workout.findByIdAndUpdate(req.params.id, req.body, { new: true })
@@ -44,6 +51,8 @@ async function updateWorkout(req, res) {
     }
 }
 
+
+//Function to delete the the workout sent in the url query parameters. Sends back a message veryfying the workout has been deleted with the workout name. 
 async function deleteWorkout(req, res) {
     try {
         const workout = await Workout.findByIdAndDelete(req.params.id)

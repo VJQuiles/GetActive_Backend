@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-
+// Function to salt the password entered by the user.
 userSchema.pre("save", async function (next) {
     if (this.isNew || this.isModified("password")) {
         const saltRounds = 10
@@ -41,11 +41,12 @@ userSchema.pre("save", async function (next) {
     next()
 })
 
+// Function to verify the password entered by the user. 
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password)
 }
 
-
+// In the event of a put or patch, this will automatically run the validators, in the even the validators dont run automatically.
 mongoose.set('runValidators', true)
 
 const User = mongoose.model("User", userSchema)

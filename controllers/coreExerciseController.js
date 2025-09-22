@@ -1,5 +1,8 @@
+// Seedong for the core exercises model in the db. I intentionally set this up to on have get routes, with the seeding route being commented out. I will eventually roll admin middleware in order to control these exercises. The ides is, only i will ammend these. 
+
 const CoreExercise = require('../models/CoreExercise')
 
+// Seeding function. The function takes a request, and sends back a response. Delete many was placed to empty the db and properly seed. 
 async function seedDB(req, res) {
     try {
         await CoreExercise.deleteMany({})
@@ -66,6 +69,7 @@ async function seedDB(req, res) {
     }
 }
 
+// Function to get all core exercises. This function is set to take a request and give a response. This does not leverage the request body though, and instead pulls everything in the core exercises folder. 
 async function getAll(req, res) {
     try {
         const coreExercises = await CoreExercise.find({})
@@ -77,6 +81,7 @@ async function getAll(req, res) {
     }
 }
 
+// Function to get singular core exercisers. This is for when users want to add exercises to their personal workouts. 
 async function getOne(req, res) {
     try {
         const coreExercise = await CoreExercise.findOne({ _id: req.params.ceId })
